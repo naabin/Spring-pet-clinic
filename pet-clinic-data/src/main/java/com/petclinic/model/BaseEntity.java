@@ -9,12 +9,7 @@ public class BaseEntity implements Serializable {
 	 */
 	private static final long serialVersionUID = 8514031906777190798L;
 
-	
-	
-	public BaseEntity(Long id) {
-		this.id = id;
-	}
-	
+
 	public BaseEntity() {
 		
 	}

@@ -16,8 +16,7 @@ public class Person extends BaseEntity {
 
 	}
 	
-	public Person(Long id, String firstName, String lastName) {
-		super(id);
+	public Person(String firstName, String lastName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
