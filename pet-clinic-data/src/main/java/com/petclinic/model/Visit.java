@@ -12,6 +12,19 @@ public class Visit extends BaseEntity {
 	private LocalDate date;
 	private String description;
 	private Pet pet;
+	
+	
+
+	public Visit(LocalDate date, String description, Pet pet) {
+		super();
+		this.date = date;
+		this.description = description;
+		this.pet = pet;
+	}
+	
+	public Visit() {
+		
+	}
 
 	public LocalDate getDate() {
 		return date;
