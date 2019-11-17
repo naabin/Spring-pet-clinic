@@ -1,12 +1,13 @@
 package com.petclinic.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class Vet extends Person {
 	
 	private static final long serialVersionUID = 6390909902969305165L;
 	
-	private Set<Specialty> specialties;
+	private Set<Specialty> specialties = new HashSet<Specialty>();
 
 	public Vet(String firstName, String lastName) {
 		super(firstName, lastName);

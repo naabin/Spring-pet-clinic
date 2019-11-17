@@ -1,12 +1,13 @@
 package com.petclinic.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class Owner extends Person {
 
 	private static final long serialVersionUID = 6116274458963665495L;
 
-	private Set<Pet> pets;
+	private Set<Pet> pets = new HashSet<Pet>();
 	private String address;
 	private String city;
 	private String telephone;
