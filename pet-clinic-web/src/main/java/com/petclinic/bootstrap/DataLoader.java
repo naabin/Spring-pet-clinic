@@ -8,9 +8,11 @@ import org.springframework.stereotype.Component;
 import com.petclinic.model.Owner;
 import com.petclinic.model.Pet;
 import com.petclinic.model.PetType;
+import com.petclinic.model.Specialty;
 import com.petclinic.model.Vet;
 import com.petclinic.services.OwnerService;
 import com.petclinic.services.PetTypeService;
+import com.petclinic.services.SpecialtyService;
 import com.petclinic.services.VetService;
 
 @Component
@@ -19,16 +21,26 @@ public class DataLoader implements CommandLineRunner {
 	private final OwnerService ownerService;
 	private final VetService vetService;
 	private final PetTypeService petTypeService;
+	private final SpecialtyService specialtyService;
 
-	public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService) {
+	public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialtyService specialtyService) {
 		this.ownerService = ownerService;
 		this.vetService = vetService;
 		this.petTypeService = petTypeService; 
+		this.specialtyService = specialtyService;
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
 		
+		int count = this.petTypeService.findAll().size();
+		if(count == 0) {
+			loadData();
+		}
+		
+	}
+
+	private void loadData() {
 		PetType dog = new PetType("Dog");
 		PetType savedDogPetType = this.petTypeService.save(dog);
 		
@@ -45,13 +57,20 @@ public class DataLoader implements CommandLineRunner {
 		fionasPet.setBirthDate(LocalDate.now());
 		fionasPet.setName("Rascal");
 		
+		Specialty radiology = new Specialty("Radiology");
+		Specialty surgery = new Specialty("Surgery");
+		Specialty dentistry = new Specialty("Dentistry");
 		
+		Specialty savedRadiology = this.specialtyService.save(radiology);
+		Specialty savedSurgery = this.specialtyService.save(surgery);
+		Specialty savedDentistry = this.specialtyService.save(dentistry);
 		
 		Owner owner1 = new Owner("Michael", "Weston");
 		owner1.setAddress("123 Brickerel");
 		owner1.setCity("Miami");
 		owner1.setTelephone("121234532");
 		owner1.getPets().add(mikesPet);
+		
 
 		Owner owner2 = new Owner("Fiona", "Glennane");
 		owner2.setAddress("200 Manhattan ST");
@@ -64,12 +83,15 @@ public class DataLoader implements CommandLineRunner {
 
 		Vet vet1 = new Vet("Sam", "Axe");
 		Vet vet2 = new Vet("Nabin", "Karki");
+		
+		vet1.getSpecialties().add(savedRadiology);
+		vet2.getSpecialties().add(savedSurgery);
+		vet2.getSpecialties().add(savedDentistry);
 
 		this.vetService.save(vet1);
 		this.vetService.save(vet2);
 
 		System.out.println("Loading Owners.... Vets...");
-
 	}
 
 }
