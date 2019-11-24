@@ -65,14 +65,18 @@ public class DataLoader implements CommandLineRunner {
 		Specialty savedSurgery = this.specialtyService.save(surgery);
 		Specialty savedDentistry = this.specialtyService.save(dentistry);
 		
-		Owner owner1 = new Owner("Michael", "Weston");
+		Owner owner1 = new Owner();
+		owner1.setFirstName("Michael");
+		owner1.setLastName("Weston");
 		owner1.setAddress("123 Brickerel");
 		owner1.setCity("Miami");
 		owner1.setTelephone("121234532");
 		owner1.getPets().add(mikesPet);
 		
 
-		Owner owner2 = new Owner("Fiona", "Glennane");
+		Owner owner2 = new Owner();
+		owner2.setFirstName("Fiona");
+		owner2.setLastName("Gleanne");
 		owner2.setAddress("200 Manhattan ST");
 		owner2.setCity("New York");
 		owner2.setTelephone("1245345509");
@@ -81,8 +85,12 @@ public class DataLoader implements CommandLineRunner {
 		this.ownerService.save(owner1);
 		this.ownerService.save(owner2);
 
-		Vet vet1 = new Vet("Sam", "Axe");
-		Vet vet2 = new Vet("Nabin", "Karki");
+		Vet vet1 = new Vet();
+		vet1.setFirstName("Sam");
+		vet1.setLastName("Axe");
+		Vet vet2 = new Vet();
+		vet2.setFirstName("Nabin");
+		vet2.setLastName("Karki");
 		
 		vet1.getSpecialties().add(savedRadiology);
 		vet2.getSpecialties().add(savedSurgery);

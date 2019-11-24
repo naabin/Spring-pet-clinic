@@ -3,6 +3,12 @@ package com.petclinic.model;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
+import lombok.Getter;
+import lombok.Setter;
+
+
+@Getter
+@Setter
 @MappedSuperclass
 public class Person extends BaseEntity {
 
@@ -26,18 +32,7 @@ public class Person extends BaseEntity {
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
-	public String getFirstName() {
-		return firstName;
-	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+
 	
 	
 }
