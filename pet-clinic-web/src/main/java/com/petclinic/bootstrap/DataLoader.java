@@ -71,6 +71,7 @@ public class DataLoader implements CommandLineRunner {
 		owner1.setAddress("123 Brickerel");
 		owner1.setCity("Miami");
 		owner1.setTelephone("121234532");
+		mikesPet.setOwner(owner1);
 		owner1.getPets().add(mikesPet);
 		
 
@@ -80,6 +81,7 @@ public class DataLoader implements CommandLineRunner {
 		owner2.setAddress("200 Manhattan ST");
 		owner2.setCity("New York");
 		owner2.setTelephone("1245345509");
+		fionasPet.setOwner(owner2);
 		owner2.getPets().add(fionasPet);
 
 		this.ownerService.save(owner1);

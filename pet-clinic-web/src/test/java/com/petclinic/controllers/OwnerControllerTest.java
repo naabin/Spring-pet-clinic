@@ -1,5 +1,6 @@
 package com.petclinic.controllers;
 
+
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -70,4 +71,15 @@ class OwnerControllerTest {
 		
 	}
 
+//	@Test
+//	void displayOwner() throws Exception{
+//		Owner owner = this.ownerService.findById(1L);
+//		
+//		when(this.ownerService.findById(Mockito.anyLong())).thenReturn(owner);
+//		
+//		this.mockMvc.perform(get("/owners/1"))
+//			.andExpect(status().isOk())
+//			.andExpect(view().name("/owners/ownerDetails"));
+//			
+//	}
 }
