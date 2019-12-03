@@ -78,6 +78,10 @@ public class OwnerServiceMap extends AbstractMapService<Owner, Long>  implements
 	public void deleteById(Long id) {
 		super.deleteById(id);
 		
+	}@Override
+	public Set<Owner> findAllByLastNameLike(String name) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

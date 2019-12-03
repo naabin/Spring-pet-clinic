@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -53,33 +54,50 @@ class OwnerControllerTest {
 	}
 
 
-	@Test
-	void testListOwners() throws Exception {
-		when(this.ownerService.findAll()).thenReturn(owners);
-		this.mockMvc.perform(get("/owners"))
-			.andExpect(status().is(200))
-			.andExpect(view().name("owners/index"))
-			.andExpect(model().attribute("owners", Matchers.hasSize(3)));
-	}
+//	@Test
+//	void testListOwners() throws Exception {
+//		when(this.ownerService.findAll()).thenReturn(owners);
+//		this.mockMvc.perform(get("/owners"))
+//			.andExpect(status().is(200))
+//			.andExpect(view().name("owners/findOwners"))
+//			.andExpect(model().attribute("owners", Matchers.hasSize(3)));
+//	}
 
 	@Test
 	void testFindOwners() throws Exception {
 		this.mockMvc.perform(get("/owners/find"))
 		.andExpect(status().is(200))
-		.andExpect(view().name("notimplemented"));
+		.andExpect(view().name("owners/findOwners"))
+		.andExpect(model().attributeExists("owner"));
 		
 		
 	}
+	
+	@Test
+	void testProcessFindForm() throws Exception{
+		
+		
+		when(ownerService.findAllByLastNameLike(Mockito.any())).thenReturn(owners);
+		
+		mockMvc.perform(get("/owners"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("owners/ownersList"))
+			.andExpect(model().attribute("selections", Matchers.hasSize(3)));
+	}
+	
+	
+	@Test
+	void testProcessFindFormReturnOne() throws Exception{
+		Owner owner = new Owner();
+		owner.setId(1L);
+		Set<Owner> ownersSet = new HashSet<Owner>();
+		ownersSet.add(owner);
+		when(ownerService.findAllByLastNameLike(Mockito.any())).thenReturn(ownersSet);
+		
+		mockMvc.perform(get("/owners"))
+			.andExpect(status().is3xxRedirection())
+			.andExpect(view().name("redirect:/owners/1"));
+		
+	}
 
-//	@Test
-//	void displayOwner() throws Exception{
-//		Owner owner = this.ownerService.findById(1L);
-//		
-//		when(this.ownerService.findById(Mockito.anyLong())).thenReturn(owner);
-//		
-//		this.mockMvc.perform(get("/owners/1"))
-//			.andExpect(status().isOk())
-//			.andExpect(view().name("/owners/ownerDetails"));
-//			
-//	}
 }
