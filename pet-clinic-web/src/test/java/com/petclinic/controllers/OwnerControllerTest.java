@@ -1,8 +1,11 @@
 package com.petclinic.controllers;
 
 
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -99,5 +102,43 @@ class OwnerControllerTest {
 			.andExpect(view().name("redirect:/owners/1"));
 		
 	}
+	
+	@Test
+	void initCreationForm() throws Exception {
+		this.mockMvc.perform(get("/owners/new"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("owners/createOrUpdateOwnerForm"))
+			.andExpect(model().attributeExists("owner"));
+		
+		verifyNoMoreInteractions(this.ownerService);
+	}
+	
+	@Test
+	void testProcessCreationForm() throws Exception {
+		Owner owner = new Owner();
+		owner.setId(1L);
+		when(this.ownerService.save(Mockito.any())).thenReturn(owner);
+		this.mockMvc.perform(post("/owners/new"))
+			.andExpect(status().is3xxRedirection())
+			.andExpect(view().name("redirect:/owners/1"))
+			.andExpect(model().attributeExists("owner"));
+		
+		verify(this.ownerService).save(Mockito.any());
+	}
+	
+	@Test
+	void testInitUpdateOwnerform() throws Exception {
+		Owner owner = new Owner();
+		owner.setId(1L);
+		when(this.ownerService.findById(Mockito.anyLong())).thenReturn(owner);
+		
+		this.mockMvc.perform(get("/owners/1/edit"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("owners/createOrUpdateOwnerForm"))
+			.andExpect(model().attributeExists("owner"));
+	}
+	
+	
+	
 
 }
